@@ -6,12 +6,6 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        Mascota m = new Mascota("Luna", "Perro", 3, 8.5, true);
-
-
-
-        System.out.println(">> Crear Mascota:");
-        m.mostrarFicha();
 
         int opcion = 0;
 
@@ -22,6 +16,7 @@ public class Main {
             op = sc.nextInt();
             System.out.println("1. crear la mascota");
             System.out.println("2. mostrar la lista");
+            System.out.println("3. buscar datos");
             System.out.println("3. salir");
 
             switch (op){
@@ -50,85 +45,99 @@ public class Main {
                     }
                     break;
                 case 3:
-                    System.out.println("3. salir");
+                    String nombre1;
+                    System.out.println("3. buscar por nombre a modificar");
+                    nombre1 = sc.next();
+
+                    if (lstNombre.isEmpty()){
+                        System.out.println("la lista no tiene elementos");
+                    }
+
+                    Mascota masc1 = null;
+
+                    for (Mascota p: lstNombre){
+                        if (p.getNombre().equalsIgnoreCase(nombre1)) {
+                            System.out.println(p);
+                        }
+                    }
+
+                    do {
+
+                        System.out.println("====== SUB-MENÚ ======");
+                        System.out.println("1. Modificar edad");
+                        System.out.println("2. Modificar peso");
+                        System.out.println("3. Enfermar");
+                        System.out.println("4. Curar");
+                        System.out.println("5. Salir");
+                        System.out.println("==================");
+                        System.out.print("Elige una opción: ");
+                        opcion = sc.nextInt();
+
+                        switch (opcion) {
+                            case 1:
+                                System.out.println(">> ANTES:");
+                                masc1.mostrarFicha();
+                                System.out.print("¿Cuántos años quieres sumar? (negativo para restar): ");
+                                int anios = sc.nextInt();
+                                if (anios > 0) {
+                                    for (int i = 0; i < anios; i++) {
+                                        masc1.cumplirAnios();
+                                    }
+                                } else if (anios < 0) {
+                                    masc1.setEdad(masc1.getEdad() + anios);
+                                }
+                                System.out.println(">> DESPUÉS:");
+                                masc1.mostrarFicha();
+                                break;
+
+                            case 2:
+                                System.out.println(">> ANTES:");
+                                masc1.mostrarFicha();
+                                System.out.print("¿Cuántos kg quieres sumar? (negativo para restar): ");
+                                double kilos = sc.nextDouble();
+                                if (kilos > 0) {
+                                    for (int i = 0; i < kilos; i++) {
+                                        masc1.engordar();
+                                    }
+                                } else if (kilos < 0) {
+                                    masc1.setPeso(masc1.getPeso() + kilos);
+                                }
+                                System.out.println(">> DESPUÉS:");
+                                masc1.mostrarFicha();
+                                break;
+
+                            case 3:
+                                System.out.println(">> ANTES:");
+                                masc1.mostrarFicha();
+                                masc1.enfermar();
+                                System.out.println(">> DESPUÉS:");
+                                masc1.mostrarFicha();
+                                break;
+
+                            case 4:
+                                System.out.println(">> ANTES:");
+                                masc1.mostrarFicha();
+                                masc1.recuperarSalud();
+                                System.out.println(">> DESPUÉS:");
+                                masc1.mostrarFicha();
+                                break;
+
+                            case 5:
+                                System.out.println("chao uwu");
+                                break;
+
+                            default:
+                                System.out.println("Opción inválida");
+                        }
+                    } while (opcion != 5);
+
+
 
 
             }
-        } while (op != 3);
-
-        do {
-
-            System.out.println("====== MENÚ ======");
-            System.out.println("1. Modificar edad");
-            System.out.println("2. Modificar peso");
-            System.out.println("3. Enfermar");
-            System.out.println("4. Curar");
-            System.out.println("5. Salir");
-            System.out.println("==================");
-            System.out.print("Elige una opción: ");
-            opcion = sc.nextInt();
-
-            switch (opcion) {
-                case 1:
-                    System.out.println(">> ANTES:");
-                    m.mostrarFicha();
-                    System.out.print("¿Cuántos años quieres sumar? (negativo para restar): ");
-                    int anios = sc.nextInt();
-                    if (anios > 0) {
-                        for (int i = 0; i < anios; i++) {
-                            m.cumplirAnios();
-                        }
-                    } else if (anios < 0) {
-                        m.setEdad(m.getEdad() + anios);
-                    }
-                    System.out.println(">> DESPUÉS:");
-                    m.mostrarFicha();
-                    break;
-
-                case 2:
-                    System.out.println(">> ANTES:");
-                    m.mostrarFicha();
-                    System.out.print("¿Cuántos kg quieres sumar? (negativo para restar): ");
-                    double kilos = sc.nextDouble();
-                    if (kilos > 0) {
-                        for (int i = 0; i < kilos; i++) {
-                            m.engordar();
-                        }
-                    } else if (kilos < 0) {
-                        m.setPeso(m.getPeso() + kilos);
-                    }
-                    System.out.println(">> DESPUÉS:");
-                    m.mostrarFicha();
-                    break;
-
-                case 3:
-                    System.out.println(">> ANTES:");
-                    m.mostrarFicha();
-                    m.enfermar();
-                    System.out.println(">> DESPUÉS:");
-                    m.mostrarFicha();
-                    break;
-
-                case 4:
-                    System.out.println(">> ANTES:");
-                    m.mostrarFicha();
-                    m.recuperarSalud();
-                    System.out.println(">> DESPUÉS:");
-                    m.mostrarFicha();
-                    break;
-
-                case 5:
-                    System.out.println("chao uwu");
-                    break;
-
-                default:
-                    System.out.println("Opción inválida");
-            }
-        } while (opcion != 5);
+        } while (op != 4);
 
         sc.close();
-
-
 
 
     }
