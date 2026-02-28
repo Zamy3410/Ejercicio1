@@ -6,24 +6,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-
         int opcion = 0;
-
         List<Mascota> lstNombre = new ArrayList<>();
         int op;
+
         do{
-            System.out.println("selecciona una opción");
-            op = sc.nextInt();
+            System.out.println("====MENÚ PRINCIPAL====");
             System.out.println("1. crear la mascota");
             System.out.println("2. mostrar la lista");
-            System.out.println("3. buscar datos");
-            System.out.println("3. salir");
+            System.out.println("3. buscar y modificar");
+            System.out.println("4. salir");
+            System.out.println("selecciona una opción");
+            op = sc.nextInt();
 
             switch (op){
                 case 1:
-                    System.out.println("1, crear la mascota");
-                    String Mascota = sc.next();
-
                     System.out.println("ingrese la especie de la mascota");
                     String especie = sc.next();
 
@@ -32,33 +29,47 @@ public class Main {
                     String nombre = sc.next();
 
                     System.out.println("ingrese el peso de la mascota");
-                    Double peso = sc.nextDouble();
+                    double peso = sc.nextDouble();
 
                     System.out.println("ingrese la edad de la mascota");
                     int edad = sc.nextInt();
+
+                    Mascota nuevaMascota = new Mascota(nombre, especie, edad, peso, true);
+                    lstNombre.add(nuevaMascota);
+                    System.out.println("mascota creada");
                     break;
 
                 case 2:
-                    System.out.println("2. Mostrar la ficha");
-                    for (Mascota p: lstNombre){
-                        System.out.println(p);
+                    if (lstNombre.isEmpty()){
+                        System.out.println("la lista no tiene elementos");
+                    } else{
+                        System.out.println("====LISTA DE MASCOTAS====");
+                        for (Mascota p: lstNombre){
+                            p.mostrarFicha();
+                        }
                     }
                     break;
+
                 case 3:
-                    String nombre1;
-                    System.out.println("3. buscar por nombre a modificar");
-                    nombre1 = sc.next();
+                    System.out.println("ingrese el nombre a buscar");
+                    String nombre1 = sc.next();
 
                     if (lstNombre.isEmpty()){
                         System.out.println("la lista no tiene elementos");
+                        break;
                     }
 
                     Mascota masc1 = null;
-
                     for (Mascota p: lstNombre){
-                        if (p.getNombre().equalsIgnoreCase(nombre1)) {
-                            System.out.println(p);
+                        if (p.getNombre().equalsIgnoreCase(nombre1)){
+                            masc1 = p;
+                            System.out.println("Mascota encontrada: ");
+                            p.mostrarFicha();
                         }
+                    }
+                    if (masc1 == null){
+                        System.out.println("no se encontro ninguna mascota con ese nombre");
+                        break;
                     }
 
                     do {
@@ -123,22 +134,23 @@ public class Main {
                                 break;
 
                             case 5:
-                                System.out.println("chao uwu");
+                                System.out.println("volviendo al menú principal");
                                 break;
 
                             default:
                                 System.out.println("Opción inválida");
                         }
                     } while (opcion != 5);
+                    break;
+                case 4:
+                    System.out.println("chao uwu");
+                    break;
 
-
-
-
+                default:
+                    System.out.println("opción inválida");
             }
         } while (op != 4);
 
         sc.close();
-
-
     }
 }
